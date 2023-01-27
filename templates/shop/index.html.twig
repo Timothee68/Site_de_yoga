@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} ShopController {% endblock %}
+
+{% block body %}
+    <div class="container-fluid" style="width:90% !important;">
+        <div class="row">
+            <div class='col'>
+            <h1 class="mt-5 mb-5">Produit </h1>
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 g-4 d-flex justify-content-lg-around">
+            {% for produit in produits %}
+            <div class="card mb-5 card-produit" style="width: 20rem;">
+                <img src="/{{produit.image}}" class="card-img-top" style="max-height:197.33px;" alt="{{produit.alt}}">
+                <div class="card-body">
+                    <h5 class="card-title title-produit"><strong>{{produit.name}}</strong></h5>
+                    <hr class="pink">
+                    <p class="card-text description-produit">{{produit.shortDescription | raw }}</p>
+                {% if produit.stock >= 1 %}     
+                    <p class="card-text fs-5"><strong>{{produit.price}}&nbsp€ / En stock : {{produit.stock}}</strong></p>
+                    <p class="text-end btn-panier"><a href="{{ path('add_shop' , {'id': produit.id }) }}" class="btn-res btn btn-primary m">Ajouter au panier <i class="shop fa-solid fa-cart-shopping m-2"></i></a></p>
+                {% else %} 
+                    <p class="fs-5 color-red"><strong>Produit épuisé, victime de son succès ! </strong></p>
+                    <p class="fs-5 color-red"><strong>Il sera bientôt de retour.</strong></p>
+                {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

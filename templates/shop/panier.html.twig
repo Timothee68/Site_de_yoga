@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} ShopController {% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="row">    
+            {% if items | length > 0 %}
+            <div class='col-8 m-5'>
+                <h1 class="mt-5 mb-4">Votre panier</h1> 
+                <table id="" class="table table-produit mt-4 display">
+                    <thead class="text-center fs-5">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Nom produit</th>
+                            <th scope="col">Prix unitaire</th>
+                            <th scope="col">Quantité</th>
+                            <th scope="col">Prix Global produits</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center fs-5 ">
+                    {% for item in items %}
+                    {% set produit = item.product %}
+                    {% set quantity = item.quantity %}
+                        <tr>                  
+                            <td><img src="/{{ produit.image}}" style="width:120px !important; height:120px; " class=""></td>
+                            <td class="pt-5">{{ produit.name }}</td>
+                            <td class="pt-5">{{ produit.price}}&nbsp€</td>
+                            <td class="pt-5 fs-5 "><a href="{{ path('remove_panier', { 'id' : produit.id }) }}"><i class="fa-solid fa-minus fs-4"></i></a> &nbsp &nbsp {{ quantity }}&nbsp &nbsp <a href="{{ path('add_panier', { 'id' : produit.id }) }}"><i class="fa-solid fa-plus fs-4"></i></i></a></td>
+                            <td class="pt-5"><strong>{{ produit.price * quantity}}&nbsp€</strong></td> 
+                            <td class="pt-5"><a href="{{ path('delete_panier', { 'id' : produit.id }) }}"><i class="fa-solid fa-trash"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>                      
+                </table>
+            {% else %}
+                <h2 class="mt-5 mb-5"> Vous n'avez aucun produits dans votre panier </h2>
+                <button type="button" class="btn-res btn-lg bg-secondary mt-2 "><a href="{{ path('app_shop') }}">Retour au shop</a></button>
+            {% endif %}
+            </div>
+            {% if qt >= 1 %}
+            <aside id="aside" >
+                <div class='col-3 '>
+                    <div class="card position-fixed aside-panier">
+                        <div class="card-body">
+                            <h3 class="mb-4 text-center text-left "><strong>Résumer panier</strong></h3>
+                            <div class="row">  
+                                <div class="col-7">
+                                    <p class="p-3">Total produits : </p>
+                                </div>
+                                <div class="col-5">
+                                    <p class="p-3"> <strong>{{ qt }}</strong></p>
+                                </div>
+                            </div>
+                            <div class="row">  
+                                <div class="col-7">
+                                    {% set fraisLivraison = 5 %}
+                                    <p class="p-3">Frais de livraison :  </p>
+                                </div>
+                                <div class="col-5">
+                                <p class="p-3"><strong>{{fraisLivraison}}&nbsp€</strong></p>
+                                </div>
+                            </div>
+                            <div class="row">  
+                                <div class="col-7">
+                                    <p class="p-3">Prix Total (HT): </p>
+                                </div>
+                                <div class="col-5">
+                                <p class="p-3"><strong>{{total}}&nbsp€</strong></p>
+                                </div>
+                            </div>
+                            <div class="row">  
+                                <div class="col-7">
+                                    <p class="p-3">Prix Total<small> (TVA inclus :)</small></p>
+                                </div>
+                                <div class="col-5">
+                                    {% set prixTVA = total  * 0.1 + total %}
+                                    {% set prixTotal = prixTVA  + fraisLivraison %}
+                                    <p class="p-3"><strong>{{ prixTotal | round(2, 'floor') }}&nbsp€</strong></p>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <hr class="pink">
+                                <button type="button" class="btn-res btn btn-lg bg-primary  mb-4 "><a href="{{ path('app_shop')}}">Continuer achat</a></button>
+                                {% if app.user.id is defined and idClient == null %}
+                                    <button type="button" class="btn-res btn btn-lg bg-primary  mb-4 "><a href="{{ path('app_payChek', {'id': app.user.id}) }}">Valider panier !</a></button>
+                                {% else %}
+                                    <p>Il faut avoir un compte pour commander je vous invite a crée un compte utilisateur  ou vous connecter et de repasser commande</p>
+                                    <button type="button" class="btn-res btn btn-lg bg-primary  mb-4 "><a href="{{ path('app_register')}}">Crée compte</a></button> 
+                                    <button type="button" class="btn-res btn btn-lg bg-primary  mb-4 "><a href="{{ path('app_login')}}">Login</a></button>    
+                                {% endif %}
+                                 
+                                <hr class="pink"> 
+                                <button type="button" class="btn-res btn btn-lg bg-primary  mb-4 " data-bs-toggle="modal" data-bs-target="#exampleModal">Tout supprimer <i class="fa-solid fa-trash-can"></i></button>
+                            </div>                 
+                        </div>     
+                    </aside>
+                </div>    
+            </div>
+            {% endif %}
+                    <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirmer vous la supréssion de tout le panier ? </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            la suppression est définitif êtes vous certain de votre déscicions ? 
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-res btn-lg bg-secondary mt-2 " data-bs-dismiss="modal" > X annuler</button>
+                            <button type="button" class="btn-res btn-lg bg-secondary mt-2 "><a href="{{ path('delete_All_panier') }}">supprimer</a></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>     
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class='col'>
+              	<img src="{{asset('img/imgPanier.jpg')}}" class="blog-image-index-detail card-img-top" alt="image panier">
+            </div>
+        </div>
+    </div>
+{% endblock %}

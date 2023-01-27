@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} ShopController {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class='col'>
+                <h1>Listes des produits en vente</h1>
+                <a type="button" class="btn btn-secondary mb-5" href="{{path('add_productSheet')}}">Ajouter produits</a>
+                <table id="table_id" class="table table-striped mt-4 display">
+                    <thead>
+                        <tr class="bg-secondary">
+                            <th scope="col">Nom produit</th>
+                            <th scope="col">Prix</th>
+                            <th scope="col ">Image</th>
+                            <th scope="col">Qtt</th>
+                            <th scope="col">Courte descriptions produits</th>
+                            <th scope="col ">Alt</th>
+                            <th scope="col">Éditer</th>
+                            <th scope="col">supprimer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for shop in shops %}  
+                        <tr>                  
+                            <td>{{ shop.name }}</td>
+                            <td>{{ shop.price}}</td>
+                            <td><img src="/{{ shop.image}}" style="width:100px !important; height:100px; " class=""></td>
+                            <td>{{ shop.stock}}</td>
+                            <td>{{ shop.shortDescription | raw }}</td>
+                            <td>{{ shop.alt  }}</td>
+                            <td><button type="button" class="btn btn-lg bg-secondary mt-2 "><a href="{{path('edit_productSheet' , {'id': shop.id } ) }}">Editer</a></button></td>
+                            <td>
+                                <button type="button" class="btn btn-lg bg-secondary mt-2 " data-bs-toggle="modal" data-bs-target="#exampleModal{{shop.id}}">supprimer</i></button>                 
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal{{shop.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Confirmer vous la supréssion de : <br>{{shop.name}} ? </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                            la suppression est définitif êtes vous certain de votre déscicions ? 
+                                            </div>
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-lg bg-secondary mt-2 " data-bs-dismiss="modal" > X annuler</button>
+                                            <button type="button" class="btn btn-lg bg-secondary mt-2 "><a href="{{path('delete_productSheet', {'id': shop.id })}}">supprimer</a></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

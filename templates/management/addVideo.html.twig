@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Video
+{% endblock %}
+
+{% block body %}
+	{{ form_start(formAddVideo) }}
+	{{ form_errors(formAddVideo) }}
+	<div class="container">
+		<div class="row">
+			<div class="col-4 mb-4 mt-4">
+				{{ form_row(formAddVideo.title, { 'label': 'Titre' }) }}
+			</div>
+			<div class="col-12 mb-4 mt-4">
+				{{ form_row(formAddVideo.description) }}
+			</div>
+			<div class="row">
+				<div class="col-4">
+					{{ form_row(formAddVideo.alt, { 'label': "placer la description de l'image 100 caractères maximum" }) }}
+				</div>
+				<div class="col-4">
+					{{ form_row(formAddVideo.urlVideo, { 'label': "placer l'url de la vidéo ou le liens internet" }) }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-4 mt-4">
+					{{ form_row(formAddVideo.submit, { 'label': 'Envoyer' }) }}
+				</div>
+			</div>
+		</div>
+	</div>
+	{{ form_end(formAddVideo) }}
+{% endblock %}
+
+
+
+

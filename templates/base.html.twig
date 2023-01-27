@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" href="{{ asset('img/favicon.ico') }}" />
+        <meta charset="UTF-8">
+        <title>{% block title %}OM NADA BRAHMA!{% endblock %}</title>
+        <meta name="title" content="Om nada braham soin et au bien-être du corps et de l'esprit">
+        <meta name="description" content="Om nada braham une entreprise qui propose des massages ess séances de yoga et d'autres activités liées au soin et au bien-être">
+        <!-- Open Graph / Facebook, Linkedin -->
+        <meta property="og:type" content="">
+        <meta property="og:url" content="https://www.facebook.com/OmNadaBrahma">
+        <meta property="og:title" content="Om nada braham soin et au bien-être du corps et de l'esprit">
+        <meta property="og:description" content="Om nada braham une entreprise qui propose des massages ess séances de yoga et d'autres activités liées au soin et au bien-être">
+        <meta property="og:image" content="">
+        <!-- Twitter -->
+        <meta property="twitter:card" content="">
+        <meta property="twitter:url" content="https://www.twiterMaPAge.fr">
+        <meta property="twitter:title" content="Om nada braham soin et au bien-être du corps et de l'esprit">
+        <meta property="twitter:description" content="Om nada braham une entreprise qui propose des massages ess séances de yoga et d'autres activités liées au soin et au bien-être">
+        <meta property="twitter:image" content="">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" integrity="sha256-5veQuRbWaECuYxwap/IOE/DAwNxgm4ikX7nrgsqYp88=" crossorigin="anonymous">
+        {# <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>"> #}
+        {% block stylesheets %}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/> 
+        
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,800italic,400,700,800' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Raleway:400,700,300,200,100,900' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Exo:wght@300&display=swap" rel="stylesheet">
+        {% endblock %}
+    </head>
+    <header class="header">
+        <div class="header-bar-nav container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="header-bar-nav container-fluid" style="width:90%;">   
+                    <a class="nav-link active" aria-current="page" href="{{path('app_home')}}">
+                        <img class="logo" src="{{ asset('img/logo/logo.jpg') }}" alt="Logo du nom de l'entreprise OM NADA BRAHMA cours de yoga et soin énergétique, massage et sonore" srcset="">
+                    </a>    
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 fs-3 text-center">
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item dropdown mt-5">
+                            <a class="nav-link nav-link-header dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Gestion du site</a>
+                            <ul class="dropdown-menu fs-4">
+                                <li><a href="{{ path('app_management') }}">Gestion préstations</a></li>
+                                <li><a href="{{ path('app_input') }}">Gestion bienfaits</a></li>
+                                <li><a href="{{ path('show_event') }}">Gestion Sessions</a></li>
+                                <li><a href="{{ path('show_stage') }}">Gestion Stages</a></li>
+                                <li><a href="{{ path('app_gestion_reservation') }}">Gestion réservation</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a href="{{ path('add_blog' , {'id_user': app.user.id}) }}" >Ajouter un artcicle de Blog</a></li>
+                                <li><a href="{{ path('add_video' , {'id_user': app.user.id})  }}" >Ajouter une vidéo</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a href="{{ path('show_shop') }}" >Gestion produits ventes</a></li>
+                                <li><a href="{{ path('app_facture') }}" >Factures</a></li>                            
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a href="{{ path('app_reply') }}" >Réponse messages</a></li>
+                                <li><a href="{{ path('prepare') }}" >Envoyer newsletter</a></li>
+                            </ul>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item dropdown mt-5">
+                            <a class="nav-link nav-link-header dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Réservation</a>
+                            <ul class="dropdown-menu fs-4">
+                                <li><a class="dropdown-item" href="{{ path('app_session')}}">Réserver une séance</a></li>
+                                <li><a class="dropdown-item" href="{{path('app_stage')}}">Stage</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown mt-5">
+                            <a class="nav-link nav-link-header dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Contenu</a>
+                            <ul class="dropdown-menu fs-4">
+                                <li><a class="dropdown-item" href="{{ path('show_blog') }}">Blog</a></li>
+                                <li><a class="dropdown-item" href="{{ path('video') }}">Vidéo</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown mt-5">
+                            <a class="nav-link nav-link-header dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">À propos</a>
+                            <ul class="dropdown-menu fs-4">
+                                <li><a class="dropdown-item" href="{{ path('app_presentation')}}">A propos de moi</a></li>
+                                <li><a class="dropdown-item" href="{{ path('app_contact') }}">Contacts</a></li>                
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-justified fs-3 d-flex justify-content-around text-center">
+                        <li class="nav-item shop-link-header nav-link mt-5 shop-link">
+                            <a href="{{ path('app_shop') }}">Shop</a>
+                        </li>
+                        <li class="nav mt-5 conteneur-pastille">
+                            <a href="{{ path('app_panier') }}"><i class="shop fa-solid fa-cart-shopping m-3"></i>
+                            {% if app.session.get("panier") %}
+                                <span class="pastille-qt">{{app.session.get("panier") | length }}</span></a>
+                            {% endif %}
+                        </li>
+                        <li class="nav-item user-link-header dropdown mt-5">
+                            <a class="nav-link dropdown nav-user-profile" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><i class="fa-solid fa-user"></i></a>
+                            <ul class="dropdown-menu fs-4">
+                                {% if app.user %}
+                                    <li><a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a></li>
+                                {% else %}
+                                    <li><a class="dropdown-item" href="{{path('app_login')}}">Connexion</a></li>
+                                    <li><a class="dropdown-item" href="{{path('app_register')}}">Crée un compte</a></li>
+                                {% endif %}
+                                {% if app.user %}
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href=" {{ path('app_user') }}">Gerer mon Compte</a></li>
+                                    <li><a class="dropdown-item" href="{{path('app_showReservation' , {'id': app.user.id} ) }}">Mes réservations</a></li>
+                                    <li><a class="dropdown-item" href="{{ path('app_command_user') }}">Mes Commandes</a></li>
+                                {% else %}
+                                {% endif %}
+                            </ul>
+                        </li>
+                  </ul>
+                </div>
+            </div>
+            </nav>
+
+            <div class="col-sm-12 color-nav-secondary">               
+                <nav>
+                    <ul class="nav nav-justified fs-5 d-flex justify-content-around">
+                        <li><a class="dropdown-item a-nav-secondary" href="{{path('app_home')}}#prestation">Prestation</a></li>
+                        <li><a class="dropdown-item a-nav-secondary" href="{{path('app_home')}}#video">Vidéos</a></li>
+                        <li><a class="dropdown-item a-nav-secondary" href="{{path('app_home')}}#blog">Blogs</a></li>
+                        <li><a class="dropdown-item a-nav-secondary" href="{{path('app_home')}}#article">Produits</a></li>
+                        <li><a class="dropdown-item a-nav-secondary" href="{{path('app_home')}}#livredor">Livre d'or</a></li>
+                    </ul>
+                </nav>
+    
+            </div>
+        </div>
+    </header>
+
+    <body>
+    <main>
+       
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success mt-4">
+            {{ message }}
+            </div>
+        {% endfor %}
+
+        {# Afficher les messages d'erreur #} 
+        {% for message in app.flashes('error') %}
+        <div class="alert alert-error text-center mt-4">
+            {{ message }}
+            </div>
+        {% endfor %}
+
+        {# Afficher les messages de warning #} 
+        {% for message in app.flashes('warning') %}
+        <div class="alert alert-warning text-center mt-4">
+            {{ message }}
+            </div>
+        {% endfor %}
+
+        {% block body %}
+
+        {% endblock %}
+    </main>
+        <footer class="mt-4 bg-dark sticky-end">
+            <div class="container-fluid text-center">
+                <div class="row d-flex justify-content-between p-3">
+                    <div class="col-4">
+                        <h3>Contact</h3>
+                        <p>Exemple.exemple.com</p>
+                        <p>06.**.**.**.**</p>
+                        <p>SIRET 2345 4852 1458 1774</p>
+                    </div>
+                    <div class="col-4">
+                        <h3 class="mb-5">ME SUIVRE</h3>
+                        <div id="reseauxSocial" class="col-md-12 d-flex justify-content-evenly mt-5 ">
+                            <a href="https://www.facebook.com/OmNadaBrahma"><i class="fa-brands fa-facebook"></i></a>
+                          <a href="https://twitter.com/?lang=fr"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="https://www.instagram.com/?hl=fr"><i class="fa-brands fa-instagram-square"></i></a>     
+                        </div>
+                    </div>
+                    <div id="newsletter" class="col-4">
+                        <h3>Newsletter</h3>
+                        <p><a class="inscrir" href="{{ path('app_newsletter')}}">S'inscrire</a></p>
+                        <p><a class="desinscrir" href="{{ path('delete_newsletter')}}">Se désinscrire</a></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <p class="text-center">&copy; 2022 - Site de yoga Timothée LUCARELLI. </p>
+                </div>
+                <div class="row">
+                    <div class="footer-lien text-center ">
+                        <p> |<a href="{{path('app_mention')}}">Mentions légales</a> |
+                            <a href="{{asset('Site_Map.pdf')}}">Plan du site</a> |
+                            <a href="{{asset('Politique de confidentialité.pdf')}}">Politique de confidentialité</a> |
+                            <a href="https://www.privacypolicies.com/live/ed9c7f88-549a-4f3f-9e5e-222565074af4">C.G.U.</a> | 
+                            <a href="{{asset('Modèle-conditions-générales-de-vente-gratuit.pdf')}}">C.G.V.</a> 
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        
+        {# script bootsrap #}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+         {# script fullCalendar #}
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js" integrity="sha256-7PzqE1MyWa/IV5vZumk1CVO6OQbaJE4ns7vmxuUP/7g=" crossorigin="anonymous"></script> 
+        <script src="{{asset('js/scrollreveal.min.js')}}"></script>
+
+        {% block javascripts %}
+        <script>
+            const sr = ScrollReveal({
+                origin:'top',
+                distance: '60px',
+                duration: 2500,
+                delay: 400,
+            })
+            // page présentation
+            sr.reveal('.presentation_1')
+            sr.reveal('.presentation_2' ,{origin: 'right'})
+            sr.reveal('.presentation_3', {origin: 'right'})
+            sr.reveal('.presentation_4', {origin: 'left'})
+            sr.reveal('.presentation_5', {origin: 'right'})
+            // PAGE ACCUEIL
+            // header-img + swipper
+            sr.reveal('.img-header-accueil')
+            sr.reveal('.mySwiper', {origin: 'bottom'})
+            // cards prestation
+            sr.reveal('.cards-prest-reveal-1', {origin: 'left' })
+            sr.reveal('.cards-prest-reveal-2', {origin: 'right', distance: '20px'})
+            sr.reveal('.cards-prest-reveal-3', {origin: 'left', distance: '20px' })
+            sr.reveal('.cards-prest-reveal-4', {origin: 'right'})
+            sr.reveal('.cards-prest-reveal-5', {origin: 'left' })
+            sr.reveal('.cards-prest-reveal-6', {origin: 'bottom'})
+            sr.reveal('.cards-prest-reveal-7', {origin: 'right' })
+            // Vidéo
+            sr.reveal('.video-reveal-1', {origin: 'right' , distance: '150px'})
+            sr.reveal('.video-reveal-2', {origin: 'left', distance: '150px'})
+            sr.reveal('.video-reveal-3', {origin: 'right' , distance: '150px'})
+            sr.reveal('.video-reveal-4', {origin: 'left' , distance: '150px'})
+            // blog
+            sr.reveal('.blog-reveal', {origin: 'right'})
+            // porduit de vente
+            sr.reveal('.reveal-produit-1', {origin: 'left'})
+            sr.reveal('.reveal-produit-2', {origin: 'right'})
+            sr.reveal('.reveal-produit-3', {origin: 'left'})
+            sr.reveal('.reveal-produit-4', {origin: 'right'})
+            // livre d'or 
+            sr.reveal('.section-ld-reveal')
+
+        </script>
+        {# script swiper pour slideShow #}
+        <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+        <script>
+            var swiper = new Swiper(".mySwiper", {
+                spaceBetween: 30,
+                centeredSlides: true,
+                autoplay: {
+                  delay: 2500,
+                  disableOnInteraction: false,
+                },
+                pagination: {
+                  el: ".swiper-pagination",
+                  clickable: true,
+                },
+                navigation: {
+                  nextEl: ".swiper-button-next",
+                  prevEl: ".swiper-button-prev",
+                },
+              });
+        </script>
+        {# script JQuery #}
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+         {# script JQuery dataTable #}
+        <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+        <script>
+          $(document).ready( function () {
+          $('#table_id').DataTable(  { "language": { url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/fr-FR.json' } });
+          $('#table_id2').DataTable( { "language": { url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/fr-FR.json' } });
+          $('#table_id3').DataTable( { "language": { url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/fr-FR.json' } });
+          $('#table_id4').DataTable( { "language": { url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/fr-FR.json' } } , 
+           {
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ]} );
+          });
+        </script>
+        {# script public #}
+        <script src="{{ asset('js/script.js') }}"> </script>
+        <script src="{{ asset('js/gsf.js') }}"> </script>
+        <script src="{{ asset('js/filters.js') }}"> </script>
+        {# script pour la gallerie d'image #}
+        <script>
+            // Get the elements with class="column"
+            var elements = document.getElementsByClassName("column");
+            
+            // Declare a "loop" variable
+            var i;
+            // Full-width images
+            function one() {
+                for (i = 0; i < elements.length; i++) {
+                    elements[i].style.flex = "100%";
+              }
+            }
+            // Two images side by side
+            function two() {
+              for (i = 0; i < elements.length; i++) {
+                  elements[i].style.flex = "50%";
+                }
+            }
+            // Four images side by side
+            function four() {
+                for (i = 0; i < elements.length; i++) {
+                    elements[i].style.flex = "25%";
+                }
+            }
+            </script>
+        {% endblock %}
+    </body>
+</html>

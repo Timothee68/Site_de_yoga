@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blog OM NADA BRAHMA
+{% endblock %}
+
+{% block body %}
+	<div class="container blog-container mt-5">
+		{% if is_granted('ROLE_ADMIN') %}
+			<button type="button" class="btn btn-primary mt-5">
+				<a href="{{ path('add_blog', {'id_user': app.user.id}) }}">Ajouter d'un post pour le blog</a>
+			</button>
+		{% endif %}
+		<h1 class="blog title mt-5 mb-5">Bienvenue sur mon blog</h1>
+		<div class="row">
+			<div class="col mb-5">
+				<table id="table_id" class="table mt-5">
+					<thead>
+						<tr class="bg-secondary">
+							<th class="table-blog" scope="col ">Sujet</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for blog in blogs %}
+							<tr>
+								<td class="td-light">
+									<div class="card mt-2 mb-3 p-5">
+											<h5 class=" card-title text-center mt-3 fs-2 ">
+												<a class="" href="{{path('detail_blog' , {'id': blog.id})}}"><strong class="hover-title-blog">{{blog.title}}</strong></a>
+											</h5>
+											<p class="card-text text-center fs-5">
+												<small class="text-muted">Par {{blog.user.pseudo}} le {{blog.publicationDate | date('d/m/Y H:m')}}</small>
+											</p>
+										{% if blog.image %}
+											<img src="/{{blog.image}}" class="blog-image-index-detail card-img-top" alt="Image correspondant à l'article de blog {{blog.title}}">
+										{% elseif blog.urlVideo %}
+											<video controls width="100%" alt="{{blog.altImage}}">
+												<source src="/{{blog.urlVideo}}" type="video/mp4">
+											</video>
+										{% else %}
+											<img src="{{asset('img/logo/logo.jpg')}}" class="blog-image-index-detail card-img-top" alt="Image du logo par défaut">
+										{% endif %}
+
+										<div class="card-body">
+											<p class="scroller card-text fs-5">{{ blog.contents | raw }}</p>
+											{% if is_granted('ROLE_ADMIN') %}
+												<button type="button" class="btn btn-lg bg-secondary mt-2 ">
+													<a href="{{path('edit_blog' , {'id': blog.id , 'id_user' : app.user.id}) }}">Editer</a>
+												</button>
+												<button type="button" class="btn btn-lg bg-secondary mt-2 " data-bs-toggle="modal" data-bs-target="#exampleModal{{blog.id}}">supprimer</i>
+											</button>
+											<!-- Modal -->
+											<div class="modal fade" id="exampleModal{{blog.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title" id="exampleModalLabel">Confirmer vous la suppression de :
+																<br>{{blog.title}}?
+															</h5>
+															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+														</div>
+														<div class="modal-body">
+															La suppression est définitive. Êtes-vous certain de votre décision ?
+														</div>
+														<div class="modal-footer">
+
+															<button type="button" class="btn btn-lg bg-secondary mt-2 " data-bs-dismiss="modal">
+																X Annuler</button>
+															<button type="button" class="btn btn-lg bg-secondary mt-2 ">
+																<a href="{{path('delete_blog' , {'id': blog.id }) }}">Supprimer</a>
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										{% endif %}
+									</div>
+								</td>
+							</tr>
+						</div>
+					</tbody>
+					{% endfor %}
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}

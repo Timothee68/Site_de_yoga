@@ -1,0 +1,17 @@
+<div class="card col-9 fs-4 p-4 mb-4">
+    <h2>Commande N° {{command.id }}</h2>  
+    <h3>Adresse de facturation</h3>   
+    <p>{{command.civility }} {{command.name }}  {{command.firstName }}, habitant à {{command.city }} {{command.cp }} {{command.adress }}</p>     
+    <p>Téléphone :{{command.telephone }} / E-mail : {{command.email }}</p>    
+
+    <h3>Contenue commande </h3>   
+    <p>Date de la commande : {{command.createdAt | date('d/m/Y H:i ') }}</p>        
+    <p>Prix total : {{command.totalAmount }}</p>
+    <p> {% if command.isPay %} Payement validé{% endif %}</p>
+
+    <h3>Détails commande </h3>  
+    {% for contain in command.contains %}
+        <p><strong>Produits :</strong> {{contain.ProductContain.name}} {{contain.ProductContain.price}} € /Unités, quantités {{contain.quantity}}, total produits {{contain.ProductContain.price * contain.quantity}} € </p>
+        {# <p>{{contain.ProductContain.shortDescription | raw }} </p> #}
+    {% endfor %}
+</div>

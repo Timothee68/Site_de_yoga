@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter adresse de livraison{% endblock %}
+
+{% block body %}
+	{{ form_start(formAdressDelivery) }}
+	{{ form_errors(formAdressDelivery) }}
+    <div class="commandeFormImg m-0">    
+        <div class="container card col-4 formCommande mt-5 ">
+            <div class="row mt-md-5">
+                    <h1>Ajouter adresse de livraison</h1>
+                    <h2>Information personnel</h2>
+
+                    <div class="col-6 mb-4 mt-4">
+                        {{ form_row(formAdressDelivery.name  , { 'label': 'Nom' }) }}
+                    </div>
+                    <div class="col-6 mb-4 mt-4">
+                        {{ form_row(formAdressDelivery.firstName  , { 'label': 'Prénom' }) }}
+                    </div>
+                    <div class="col-6 mb-4 mt-4">
+                        {{ form_row(formAdressDelivery.civility , { 'label': 'Civilité' }) }}
+                    </div>
+                <hr class="pink"> 
+                <div class="row"> 
+                    <h2>Adresse de livraison</h2>  
+                    <div class="col-4 mb-4 mt-4">
+                        {{ form_row(formAdressDelivery.city, { 'label': 'Ville' }) }}
+                    </div>
+                    <div class="col-6 mb-4 mt-4">
+                        {{ form_row(formAdressDelivery.cp, { 'label': 'Code postal' }) }}
+                    </div>
+                    <div class="col-12 mt-4">
+                        {{ form_row(formAdressDelivery.adress, { 'label': 'Adresse' }) }}
+                    </div>
+                </div>  
+                <hr class="pink">  
+                <div class="row">
+                    <div class="col-4">
+                        {{ form_row(formAdressDelivery.recaptcha) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 mt-4 mb-4">
+                        {{ form_row(formAdressDelivery.submit, { 'label': 'Envoyer' }) }}
+                    </div>
+                </div>       
+            </div>
+        </div>    
+    </div>
+	{{ form_end(formAdressDelivery) }}
+{% endblock %}
+

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une prestation
+{% endblock %}
+
+{% block body %}
+	{{ form_start(form) }}
+	{{ form_errors(form) }}
+	<div class="container">
+		<div class="row">
+			<div class="col-4 mb-4 mt-4">
+				{{ form_row(form.title, { 'label': 'Titre' }) }}
+			</div>
+			<div class="col-4 mb-4 mt-4">
+				{{ form_row(form.price, { 'label': 'Prix' }) }}
+			</div>
+			<div class="col-4 mb-4 mt-4">
+				{{ form_row(form.img) }}
+			</div>
+			<div class="col-4 mb-4 mt-4">
+				{{ form_row(form.backgroundColor) }}
+			</div>
+			<div class="col-12 mb-4 mt-4">
+				{{ form_row(form.description) }}
+			</div>
+			<hr>
+			<h2>Ajout de photos pour la gallerie d'image
+			</h2>
+			<div class="col-8">
+				{{ form_row(form.imgCollectionBenefits) }}
+			</div>
+			<div class="row">
+				<div class="col-4 mt-4">
+					{{ form_row(form.submit, { 'label': 'Envoyer' }) }}
+				</div>
+			</div>
+		</div>
+	</div>
+	{{ form_end(form) }}
+{% endblock %}

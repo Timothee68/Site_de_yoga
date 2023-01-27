@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion du site!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1 class="text-center">Liste des factures</h1>
+        <table id="table_id" class="table table-striped mt-4 display">
+            <thead>
+            <tr class="bg-secondary">
+                <th scope="col ">Id facture</th>
+                <th scope="col">Date facturation</th>
+                <th scope="col">Nom client</th>
+                <th scope="col">Détails</th>
+                <th scope="col">Télécharger PDF</th>
+
+            </tr>
+            </thead>
+            <tbody>
+                {% for facture in factures %}
+                <tr>
+                    <td class="text-center fs-5"><a  href="{{ path('detail_facture' , {"id": facture.id}) }}" >{{facture.id }}</a></td>
+                    <td class="text-center fs-5">{{facture.createdAt | date('d/m/Y H:i')}}</td> 
+                    <td class="text-center fs-5"><a  href="{{ path('detail_facture' , {"id": facture.id}) }}" >{{facture.name ~ facture.firstName }}</a></td>
+                    <td class="text-center fs-5"><a href="{{ path('detail_facture' , {'id': facture.id}) }}">detail</a></td>
+                    <td class="text-center fs-5"> <button class='btn-res btn' ><a href="{{ path('facture' , {'id': facture.id} ) }}">Exporter Facture PDF</a></button></td>                                             
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

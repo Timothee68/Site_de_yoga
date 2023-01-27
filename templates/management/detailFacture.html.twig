@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion du site!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="card col-9 fs-4 p-4 mt-4 mb-4">
+            <h2>Commande N° {{facture.id }}</h2>  
+            <h3>Adresse de facturation</h3>   
+            <p>{{facture.civility }} {{facture.name }}  {{facture.firstName }}, habitant à {{facture.city }} {{facture.cp }} {{facture.adress }}</p>     
+            <p>Téléphone :{{facture.telephone }} / E-mail : {{facture.email }}</p>    
+
+            <h3>Contenue facturee </h3>   
+            <p>Date de la facturee : {{facture.createdAt | date('d/m/Y H:i')}}</p>        
+            <p>Prix total : {{facture.totalAmount }}</p>
+            <p> {% if facture.isPay %} Payement validé{% endif %}</p>
+
+            <h3>Détails facturee </h3>  
+            {% for contain in facture.contains %}
+                <p><strong>Produits :</strong> {{contain.ProductContain.name}} {{contain.ProductContain.price}} € /Unités, quantités {{contain.quantity}}, total produits {{contain.ProductContain.price * contain.quantity}} € </p>
+                {# <p>{{contain.ProductContain.shortDescription | raw }} </p> #}
+            {% endfor %}
+            <button class='btn-res btn' ><a href="{{ path('facture' , {'id': facture.id} ) }}">Exporter Facture PDF</a></button>
+        </div>
+    </div>    
+<div>
+{% endblock %}    

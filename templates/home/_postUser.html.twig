@@ -1,0 +1,68 @@
+<div class="container-message">
+        {% if post.user.img is defined and post.user.img != null %}
+            <figure class="avatar">
+                <img src="{{ post.user.img }}" class="img-message img-fluid rounded-start" alt="Image utilisateur">
+            </figure>
+        {% else %}
+            <figure class="avatar">
+                <img src="{{asset('img/avatar.jpg')}}" class="img-message-avatar" alt="Avatar">
+            </figure>
+        {% endif %}
+
+        {% if post.user.id is defined %}
+            <h5 class="fs-5 pseudo-message">
+                Écrit par <strong>{{post.user.pseudo }}</strong> le {{ post.creationDate | date('d/m/Y H:i')}}</h5>
+        {% else %}
+            <h5 class="fs-5">Compte supprimé</h5>
+        {% endif %}
+        <hr class="pink">
+        <p class="fs-5 contents-message">{{ post.contents | raw }}</p>
+        {% if  is_granted('ROLE_ADMIN') or post.user.id is defined and app.user.id is defined and app.user.id == post.user.id %}
+        <div class="card-footer">
+            {# <hr class="pink"> #}
+            <button type="button" class="btn-res btn btn-secondary">
+                <a href="{{ path('edit_post', {'id': post.id }) }}">Éditer</a>
+            </button>
+            <!-- Modal suppresion -->
+            <button type="button" class="btn-res btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal{{post.id}}">supprimer</i></button>
+        </div>
+        <div class="modal fade" id="exampleModal{{post.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirmez-vous la suppression du post ?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            <strong>Contenu message :</strong>
+                        </p>
+                        <p>{{post.contents}}
+                        </p>
+                        La suppression est définitive. Êtes-vous certain de votre décisions ?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-res btn btn-secondary" data-bs-dismiss="modal">
+                            X Annuler</button>
+                        <button type="button" class="btn-res btn btn-secondary">
+                            <a href="{{ path('delete_post', {'id': post.id }) }}">Supprimer</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+    {# message reply #}
+    
+    {% for response in post.replies %}
+        <div class="container-response">
+            <figure class="avatar-right">
+                <img src="{{asset('img/avatar.jpg')}}" class="img-message-avatar right" alt="Avatar">
+            </figure>
+            <hr>
+            <h5 class="fs-5">Réponse de <strong>{{response.sender.pseudo }}</strong> le {{ post.creationDate | date('d/m/Y H:i')}}</h5>
+            <p class="fs-5 contents-message mt-3">{{ response.content| raw }}  </p>
+        </div>
+    {% endfor %}
+</div>

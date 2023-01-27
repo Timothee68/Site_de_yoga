@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    vidéo
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class ="row">
+            <div class="col">
+                <h1 class="mt-2 mb-5">Les vidéos</h1> 
+            </div>
+        </div>
+        <div class ="row">
+            <div class="row row-cols-3 row-cols-md-4 g-4">
+                {% for video in videos %}
+                    <div class="col">
+                        <div class="card container-video-index">
+                            <video controls width="100%" class="video-self" alt="{{video.alt}}">
+                                <source src="/{{video.urlVideo}}" type="video/mp4">
+                            </video>
+                            <div class="card-body">
+                                <h5 class="card-title description-title">{{video.title}}</h5>
+                                <p class="card-text description-video">{{video.description | raw }}</p>
+                            </div>
+                        </div>
+                        <div class="card-footer videomuted">
+                            <small class="text-muted">{{video.user.pseudo}}</small></br>
+                            <small class="text-muted">Le {{video.publicationDate | date(" l m  F Y H:m", "Europe/Paris") }}</small>
+                            {% if is_granted("ROLE_ADMIN") %}
+                                <p class="btn btn-lg bg-secondary mt-2 "><a href="{{ path('edit_video',{'id': video.id , "id_user": app.user.id }) }}" class="mb-2">Editer</a></p> 
+                                <p type="button" class="btn btn-lg bg-secondary mt-2 " data-bs-toggle="modal" data-bs-target="#exampleModal{{video.id}}">supprimer</i></button>                 
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal{{video.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Confirmer vous la supréssion de : <br>{{video.title}} ? </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                la suppression est définitif êtes vous certain de votre déscicions ? 
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-lg bg-secondary mt-2 " data-bs-dismiss="modal" > X annuler</button>
+                                                <button type="button" class="btn btn-lg bg-secondary mt-2 "><a href="{{ path('delete_video',{'id': video.id }) }}">supprimer</a></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>    
+                {% endfor %} 
+            </div>
+        </div>
+    </div>
+{% endblock %}

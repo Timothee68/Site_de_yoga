@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un produit de vente
+{% endblock %}
+
+{% block body %}
+
+
+	{{ form_start(formAddProductSheet) }}
+	{{ form_errors(formAddProductSheet) }}
+	<div class="container">
+		<div class="row">
+			<div class="col-3 mb-4 mt-4">
+				{{ form_row(formAddProductSheet.name, { 'label': 'Titre' }) }}
+			</div>
+			<div class="col-3 mb-4 mt-4">
+				{{ form_row(formAddProductSheet.price) }}
+			</div>
+			<div class="col-3 mb-4 mt-4">
+				{{ form_row(formAddProductSheet.stock) }}
+			</div>
+			<div class="col-12 mb-4 mt-4">
+				{{ form_row(formAddProductSheet.shortDescription, { 'label': "Courte description du produit" }) }}
+			</div>
+			<div class="row">
+				<div class="col-4 mb-4">
+					{{ form_row(formAddProductSheet.image) }}
+				</div>
+				<div class="col-4">
+					{{ form_row(formAddProductSheet.alt, { 'label': "Placer la description de l'image 100 caractères maximum" }) }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-4 mt-4">
+					{{ form_row(formAddProductSheet.submit, { 'label': 'Envoyer' }) }}
+				</div>
+			</div>
+		</div>
+	</div>
+	{{ form_end(formAddProductSheet) }}
+
+{% endblock %}

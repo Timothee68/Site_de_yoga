@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer adresse de commande{% endblock %}
+
+{% block body %}
+	{{ form_start(formCommand) }}
+	{{ form_errors(formCommand) }}
+    <div class="commandeFormImg m-0">    
+        <div class="container card col-4 formCommande mt-5 ">
+            <div class="row mt-md-5">
+
+                    <h2>Information personnel</h2>
+
+                      <div class="col-6 mb-4 mt-4">
+                        {{ form_row(formCommand.name , { 'label': 'Nom' }) }}
+                    </div>
+                    <div class="col-6 mb-4 mt-4">
+                        {{ form_row(formCommand.firstName, { 'label': 'Prénom' }) }}
+                    </div>
+                    <div class="col-6 mb-4 mt-4">
+                        {{ form_row(formCommand.civility , { 'label': 'Civilité' }) }}
+                    </div>
+                    <div class="col-6 mb-4 mt-4">
+                        {{ form_row(formCommand.email, { 'label': 'E-mail' }) }}
+                    </div>
+                    <div class="col-6 mb-4 mt-4">
+                        {{ form_row(formCommand.telephone , { 'label': 'Telephone' }) }}
+                    </div>
+                <hr class="pink"> 
+                <div class="row"> 
+                    <h2>Adresse de facturation</h2>   
+                    <div class="col-4 mb-4 mt-4">
+                        {{ form_row(formCommand.city, { 'label': 'Ville' }) }}
+                    </div>
+                    <div class="col-6 mb-4 mt-4">
+                        {{ form_row(formCommand.cp, { 'label': 'Code postal' }) }}
+                    </div>
+                    <div class="col-12 mt-4">
+                        {{ form_row(formCommand.adress, { 'label': 'Adresse' }) }}
+                    </div>
+                </div>  
+                <hr class="pink">  
+                <div class="row">
+                    <div class="col-4">
+                        {{ form_row(formCommand.recaptcha) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 mt-4 mb-4">
+                        {{ form_row(formCommand.submit, { 'label': 'Envoyer' }) }}
+                    </div>
+                </div>       
+            </div>
+        </div>    
+    </div>
+	{{ form_end(formCommand) }}
+{% endblock %}
+

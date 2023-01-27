@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Payment Success!{% endblock %}
+
+{% block body %}
+
+<div class="container mt-5" style="width:90% !important;">
+    <div class="row">
+        <div class='col mb-5'>
+            <h1 class="mt5 mb-5 text-center">Merci pour votre commande !</h1>
+            <button class='btn-res btn'><a href="{{ path('facture' , {'id': command.id} ) }}">Exporter Facture PDF</a></button>
+            <button class='btn-res btn'><a href="{{path('app_home')}}">Retour au site</a></button>
+        </div>             
+    </div>         
+    <div class="row">
+        <div class='col mb-5'>                      
+            <p class="fs-5 mb-4">
+                Nous vous remercions de votre confiance !
+                Si vous avez des questions, veuillez envoyer un courriel à
+                <a href="mailto:orders@example.com">Om-nada-braham@exemple.com</a>.
+            </p>    
+            {% include "shop/facturePdf.html.twig" %}
+        </div>              
+    </div>
+</div>
+{% endblock %}

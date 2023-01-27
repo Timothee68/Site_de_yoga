@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commandes client{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid mt-5" style="width:90% !important;">
+        <div class="row">
+                <h1 class="mt5 mb-5 text-center ">Vos commandes</h1>
+            <div class="col-3">
+                  <div class="imgReservationsssss"></div>
+            </div>
+            <div class='col-9'>
+                <div class="accordion" id="accordionExample">
+                {% set counter = 1 %}
+                {% for command in commands %}
+                    <div class="accordion-item fs-5">
+                        <h2 class="accordion-header" id="headingOne{{counter}}">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne{{counter}}" aria-expanded="true" aria-controls="collapseOne">
+                               Commande N° {{counter}}
+                        </button>
+                        </h2>
+                        <div id="collapseOne{{counter}}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <h2>Commande N° {{command.id }}, Datant du {{command.createdAt | date('d/m/Y H:i ') }} </h2>  
+                                <h3 class=" mt-3 mb-3">Adresse de facturation</h3>   
+                                <p>{{command.civility }} {{command.name }}  {{command.firstName }}, habitant à {{command.city }} {{command.cp }} {{command.adress }} / Téléphone :{{command.telephone }} / E-mail : {{command.email }}</p>       
+                                <p>Prix total : {{command.totalAmount }} € , {% if command.isPay %} Payement validé{% endif %}</p>
+                                <h3 class=" mt-3 mb-3">Détails commande </h3>  
+                                {% for contain in command.contains %}
+                                    <p><strong>Produit :</strong> {{contain.ProductContain.name}} {{contain.ProductContain.price}} € /Unités, quantités {{contain.quantity}}, total produits {{contain.ProductContain.price * contain.quantity}} € </p>
+                                    <p><strong>Déscription :</strong>{{contain.ProductContain.shortDescription | raw }} </p>
+                                {% endfor %}
+                                <button class='btn-res btn' ><a href="{{ path('facture' , {'id': command.id} ) }}">Exporter Facture PDF</a></button>
+                            </div>
+                        </div>
+
+                    </div>
+                    {% set counter = counter + 1 %}
+                {% endfor %}
+                </div>
+            </div>           
+        </div>
+    </div>
+
+{% endblock %}

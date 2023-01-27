@@ -1,0 +1,347 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil
+{% endblock %}
+
+{% block body %}
+	{% if edit == 'null' %}
+	
+	<section class="img-header-accueil">
+	   <figure class="img_header">
+                <img id="header_img" src="{{asset('img/img-header.jpg')}}" alt="Yoga posture dans la montagne">
+            </figure>
+            <div class="header_info">
+				<H1 class="titre-home">Bienvenue sur <em>OM-NADA-BRAHMA</em> un <em>site de yoga</em> et de <em>bien-être</em> fait pour vous.</H1>
+            </div>
+			<div class="header_citation">
+                <p class="header_info_p">Prendre <em>soin</em> de son <em>corps</em> et de son <em>mental</em></p>
+			</div>	
+	</section>
+	<section class="width-swiper">
+		<div class="swiper mySwiper mt-5">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">
+					<figure>
+						<img src="{{asset('img/imported/62f3ac9b3ed40.jpg')}}" alt=" OM-NADA-BRAHMA , Yoga, Massage, Sonothérapie. Bien-être du corps et de l'esprit"></div>
+					<figcaption class="figcaption-home">
+						<em>Sonotéhrapie individuelle</em>
+					</figcaption>
+				</figure>
+				<div class="swiper-slide">
+					<figure>
+						<img src="{{asset('img/imported/62f26ea855cb4.jpg')}}" alt=" OM-NADA-BRAHMA , Yoga, Massage, Sonothérapie. Bien-être du corps et de l'esprit">
+						<figcaption class="figcaption-home">
+							<em>Massage ayurvédique</em>
+						</figcaption>
+					</figure>
+				</div>
+				<div class="swiper-slide">
+					<figure>
+						<img src="{{asset('img/imported/62f37a7469692.jpg')}}" alt=" OM-NADA-BRAHMA , Yoga, Massage, Sonothérapie. Bien-être du corps et de l'esprit">
+						<figcaption class="figcaption-home">
+							<em>Les bols tibétains</em>
+						</figcaption>
+					</figure>
+				</div>
+				<div class="swiper-slide">
+					<figure>
+						<img src="{{asset('img/imported/62f37aafacb04.jpg')}}" alt=" OM-NADA-BRAHMA , Yoga, Massage, Sonothérapie. Bien-être du corps et de l'esprit">
+						<figcaption class="figcaption-home">
+							<em>Sonotéhrapie de groupe</em>
+						</figcaption>
+					</figure>
+				</div>
+				<div class="swiper-slide">
+					<figure>
+						<img src="{{asset('img/imported/62f24805ad7c0.jpg')}}" alt=" OM-NADA-BRAHMA , Yoga, Massage, Sonothérapie. Bien-être du corps et de l'esprit">
+						<figcaption class="figcaption-home">
+							<em>Massage holistique</em>
+						</figcaption>
+					</figure>
+				</div>
+				<div class="swiper-slide">
+					<figure>
+						<img src="{{asset('img/imported/62f2688749b8d.jpg')}}" alt=" OM-NADA-BRAHMA , Yoga, Massage, Sonothérapie. Bien-être du corps et de l'esprit">
+						<figcaption class="figcaption-home">
+							<em>Position de yoga du son</em>
+						</figcaption>
+					</figure>
+				</div>
+				<div class="swiper-slide">
+					<figure>
+						<img src="{{asset('img/imported/630dc9ad5df9e.JPG')}}" alt=" OM-NADA-BRAHMA , Yoga, Massage, Sonothérapie. Bien-être du corps et de l'esprit">
+						<figcaption class="figcaption-home">
+							<em>Position de yoga Hata</em>
+						</figcaption>
+					</figure>
+				</div>
+				<div class="swiper-slide">
+					<figure>
+						<img src="{{asset('img/imported/630dc9b79b159.jpg')}}" alt=" OM-NADA-BRAHMA , Yoga, Massage, Sonothérapie. Bien-être du corps et de l'esprit">
+						<figcaption class="figcaption-home">
+							<em>Position de yoga Advaita</em>
+						</figcaption>
+					</figure>
+				</div>
+				<div class="swiper-slide">
+					<figure>
+						<img src="{{asset('img/imported/630dc9c200e1b.jpg')}}" alt=" OM-NADA-BRAHMA , Yoga, Massage, Sonothérapie. Bien-être du corps et de l'esprit">
+						<figcaption class="figcaption-home">
+							<em>Position de yoga Advaita</em>
+						</figcaption>
+					</figure>
+				</div>
+			</div>
+			<div class="swiper-pagination"></div>
+		</div>
+	</section>
+	<div class="wrapper">	
+		<section class="section">
+
+			<h2 id="prestation">Les Prestations</h2>
+			<hr class="pink">
+			<div class="boites">
+			{% set nbReveal = 1 %}
+				{% for benefit in benefits %}
+					<div class="boite cards-prest-reveal-{{nbReveal}}" ontouchstart="this.classList.toggle('hover');">
+						<div class="conteneur">
+							<div class="front" style="background-image: url({{benefit.img}})" alt="Image représentant {{ benefit.title }} pendant sa pratique">
+								<div class="inner">
+									<h5 class="card-title">
+										<em>{{benefit.title}}</em>
+									</h5>
+									<span>Venez découvrir</span>
+								</div>
+							</div>
+							<div class="back">
+								<div class="inner">
+									<p>
+										<a href="{{ path('detail_benefit' , {'id': benefit.id}) }}" class="card-presta-btn">En savoir plus</a>
+									</p>
+									<p>
+										<a href="{{ path('app_session' , {'benefit': benefit.id , 'category': benefit.category.id }) }}" class="card-presta-btn">Réserver une séance</a>
+									</p>
+									{% if is_granted("ROLE_ADMIN") %}
+										<p>
+											<a href="{{ path('edit_benefit',{'id': benefit.category.id , 'benefit_id': benefit.id }) }}" class="mb-2">Éditer</a>
+										</p>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					</div>
+					{% set nbReveal = nbReveal + 1 %}
+				{% endfor %}
+			</div>
+
+		</section>
+
+		<section class="video-section">
+
+			<h2 id="video">Retrouver les vidéos</h2>
+			<p class="viewAll-p">
+				<a class="viewAll" href="{{ path('video') }}">View all</a>
+			</p>
+
+			<hr class="pink">
+
+			<p class="text-descriptif-section">
+				Retrouver toutes les vidéos des séances de <em>yoga</em>, des stages effectués et des vidéos
+					soigneusement choisies concernant les <em>soins énergétiques et du corps</em>.
+			</p>
+			<div class="container-global-video">
+			{% set nbReveal = 1 %}
+			{% for video in videos %}
+				<div class="container-video video-reveal-{{nbReveal}}">
+					<div class="video-self">
+							<video controls width="100%" alt="{{video.alt}}">
+						<source src="{{video.urlVideo}}" type="video/mp4">
+					</video>
+					</div>
+					<div class="video-body">
+						<h2 class="video-title">{{video.title}}</h2>
+						<p class="video-description">{{video.description | raw }}</p>
+						<small class="video-small">Poster le {{video.publicationDate | date( "d-m-Y H:m")}}</small>
+					</div>
+				</div>
+			{% set nbReveal = nbReveal + 1 %}
+			{% endfor %}
+			</div>	
+		</section>
+
+		<section class="section">
+
+			<h2 class="title-section-home" id="blog">Blog et actualités d'
+				<em>OM-NADA-BRAHMA</em>
+			</h2>
+
+			<p class="viewAll-p">
+				<a class="viewAll" href="{{ path('show_blog') }}">View all</a>
+			</p>
+
+			<hr class="pink">
+
+			<p class="text-descriptif-section">
+				Retrouver toutes les actualités concernant mon activité et tout ce qui peut graviter autour.
+			</p>
+			<ul id="categories" class="clr">
+				<li class="pusher"></li>
+				{% for blog in blogs %}
+					<li class="blog-reveal">
+						<div>
+							{% if blog.image %}
+								<img src="{{blog.image}}" class="card-img-top" alt="Image correspondant à l'article de blog {{blog.title}}">
+							{% elseif blog.urlVideo %}
+								<video width="320" height="240" controls>
+									<source src="#" type="video/mp4">
+									<source src="#" type="video/ogg">
+									Votre navigateur ne prend pas en charge la balise vidéo.
+								</video>
+							{% else %}
+								<img src="{{asset('img/logo/logo.jpg')}}" class="blog-image card-img-top" alt="Image du logo par défaut">
+							{% endif %}
+							<h1>{{blog.title | upper}}</h1>
+							<p>
+								<a href="{{ path('detail_blog', {'id': blog.id}) }}" class="text-light ">Voir plus</a><br><br>
+								Éditer le :
+								{{blog.publicationDate | date('d/m/Y H:m')}}
+							</p>
+						</div>
+					</li>
+				{% endfor %}
+			</ul>
+		</section>
+
+		<section class="section ">
+			<h2 class="title-section-home" id="article">Produits artisanaux d'<em>OM-NADA-BRAHMA</em> ou d'artisans.</h2>
+
+			<p class="viewAll-p">
+				<a class="viewAll" href="{{ path('app_shop') }}">View all</a>
+			</p>
+			<hr class="pink">
+
+			<p class="text-descriptif-section">Retrouver tous les articles bio, fait main par mes soins pour le respect de l'environnement et de votre corps, et plus encore.</p>
+
+				<div class="container-produit-home">
+				{% set nbReveal = 1 %}
+					{% for produit in produits %}
+					<div class="card mb-5 card-produit reveal-produit-{{nbReveal}}" style="width: 20rem;">
+						<img src="/{{produit.image}}" class="card-img-top" style="max-height:197.33px;" alt="{{produit.alt}}">
+						<div class="card-body">
+							<h5 class="card-title title-produit"><strong>{{produit.name}}</strong></h5>
+							<hr class="pink">
+							<p class="card-text description-produit">{{produit.shortDescription | raw }}</p>
+							<p class="card-text fs-5"><strong>{{produit.price}}&nbsp€</strong></p>
+						</div>
+					</div>
+					{% set nbReveal = nbReveal + 1 %}
+					{% endfor %}
+				</div>
+		</section>
+
+		<section class="section section-ld-reveal">
+
+			<div id="livredor">
+				<h2  class="title-ld">Le livre d'or</h2>
+				<hr class="pink">
+				<p class="text-descriptif-section">Si vous souhaitez laisser un commentaire, vous pouvez le déposer ici, dans le respect et dans la bienveillance.</p>
+				{% if app.user and app.user.chekReservation >= 1  %}
+					{{ form_start(formAddPost) }}
+					{{ form_errors(formAddPost) }}
+					<div class="container-fomr-ld">
+							{{ form_row(formAddPost.contents, { 'label': 'Laisser un commentaire' }) }}
+					</div>
+					<div class="row">
+						<div class="col d-flex justify-content-center">
+							<div class="col-2 mt-2 mb-5">
+								{{ form_row(formAddPost.submit, { 'label': 'Envoyer' }) }}
+							</div>
+						</div>
+					</div>
+					{{ form_end(formAddPost) }}
+				{% else %}
+					<p class="text-descriptif-section">
+						Pour pouvoir laisser un commentaire, il faut avoir un compte utilisateur ou avoir déjà effectué une réservation ou un achat en ligne. 
+					</p>
+				{% endif %}
+				<div class="posts-container">	
+				{% for post in posts %}
+					{% include "home/_postUser.html.twig" %}
+				{% endfor %}
+				</div>
+				<p class="container-btn-voirPlus">
+				<button type="button" class="btn-res btn voirPLus">Voir plus</button>
+				</p>
+			</div>
+		</section>
+		{% elseif edit == 'edit' %}
+			<section>
+				<h2>Le livre d'or</h2>
+				<hr class="pink">
+				<p class="fs-3 text-descriptif-section">Modification du commentaire</p>
+				{% if app.user %}
+					{{ form_start(formAddPost) }}
+					{{ form_errors(formAddPost) }}
+					<div class="col d-flex justify-content-center">
+						<div class="col-sm-6  mb-2 mt-4">
+							{{ form_row(formAddPost.contents, { 'label': 'Laisser un commentaire' }) }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col d-flex justify-content-center">
+							<div class="col-2 mt-2 mb-5">
+								{{ form_row(formAddPost.submit, { 'label': 'Envoyer' }) }}
+							</div>
+						</div>
+					</div>
+					{{ form_end(formAddPost) }}
+				{% else %}
+					<p class="fs-3">Connecter vous pour pouvoir laisser un commentaire !</p>
+				{% endif %}
+				<div id="livreDor">
+					{% for post in posts %}
+						{% if is_granted('ROLE_ADMIN') or post.user.id is defined and app.user.id == post.user.id  %}
+							{% include "home/_postUser.html.twig" %}
+						{% endif %}
+					{% endfor %}
+				</div>
+			</section>
+		{% endif %}
+</div>
+
+<script>
+
+		let limit = "{{nbPost}}";
+		let page = "{{ page + 1 }}"  ;
+		let vp = document.querySelector(".voirPLus");
+
+		vp.addEventListener("click" , function() {
+			fetch("/api/home", {
+				method: "POST",
+				headers: {
+					'Accept': 'application/json, text/plain, */*',
+					'Content-Type': 'application/json'
+				},
+
+				body: JSON.stringify({
+					limit: limit,
+					page: page,
+				}),
+			})
+			.then(response => response.json()) 
+			.then(response => {
+
+				page = parseInt(page) + 1 ;
+				let postTemplate = document.querySelector(".container-message");
+				let postContainer = document.querySelector(".posts-container");
+				
+				if(postTemplate){
+					for(let post of response.post)
+					{
+						postContainer.innerHTML += post.content ;
+					}
+				}
+			})
+		})
+</script>
+{% endblock %}

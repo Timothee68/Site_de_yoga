@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{benefit}}!
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid mt-5">
+	<h1 class="mt-5 p-4">Détails pour {{benefit}}</h1>
+		<div class="row">
+			<div class="card-group d-flex justify-content-evenly">
+				<div class="col-5 m-3 ">
+					<div
+						class="card">
+						{# il faut mettre un slach ici car le chemin d'accès est différent  #}
+						<img src="/{{benefit.img}}" class="presta-home card-img-top mt-5" alt="image représentant {{ benefit.title }} pendant ça pratique ">
+						<div class="card-body fs-5">
+							<h3 class="card-title">Comment décrire :
+								{{benefit}}
+							</h3>
+							<p class="card-text mt-4">
+								{{ benefit.description | raw }}
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-5 m-3 ">
+					<div class="card">
+						<img src="{{asset('img/other/bien-etre.webp')}}" class="presta-home card-img-top mt-5" alt="image représentant les bienfaits fait au corps des pierres empiler sur un fond de décors de montagne">
+						<div class="card-body">
+							<h4 class="card-title">Les bienfaits que vous apporteront les séances au fil du temps.</h4>
+							 {% if is_granted('ROLE_ADMIN') %}
+							<button type="button" class="btn btn-lg bg-secondary mt-2 ">
+								<a href="{{ path('detail_edit_benefit', {'id': benefit.id }) }}">Ajout de bénéfice pour{{ benefit }}</a>
+							</button>
+							{% endif %}
+							<ul class="mt-4 fs-5">
+								{% for benefited in benefit.inputs %}
+									<li class="mt-2 mb-4 text-justify">
+										<img class="imgBe" src="{{ asset('img/other/imagebienetre.png') }}" alt="Image représentant un personnage faisant du yoga avec les chakras " srcset="">
+										{{ benefited.description}}
+										<i class="fa-solid fa-hands-praying"></i>
+									</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row text-center">
+				<p class="fs-3 mt-5">
+					<strong>Le coût d'une séance pour une heure s'élève à {{ benefit.price }}€</strong>
+				</p>
+			</div>
+			<p class="text-center">
+				<button type="button" class=" btn-res btn btn-lg btn-secondary mt-2 ">
+					<a href="{{ path('app_session' , {'benefit': benefit.id , 'category': benefit.category.id }) }}">Réserver une séance</a>
+				</button>
+			</p>
+			<div class="container">
+				<div class="row">
+
+					<section>
+						<div class="swiper mySwiper mt-5 mb-5">
+							<div class="swiper-wrapper">
+								{% for image in images %}
+									<div class="swiper-slide">
+										<figure>
+											<img src="/{{ image.img }}" alt="{{ image.alt ~ benefit.title }}">
+										</figure>
+									</div>
+								{% endfor %}
+								<div class="swiper-pagination"></div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

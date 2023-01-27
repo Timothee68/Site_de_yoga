@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion calendrier{% endblock %}
+
+{% block body %}
+<div class="container mb-5">
+    <h1 class="mt-5 mb-5">Planning</h1>
+    <button type="button" class="btn btn-lg bg-secondary mt-5  mb-5 col-3 "><a href="{{ path('add_session') }}">Ajouter une session une prestation</a></button>
+
+    <table id="table_id" class="table table-striped mt-4 display">
+        <thead>
+            <tr class="table-blog">
+                <th>Id</th>
+                <th scope="col ">prestation</th>
+                <th scope="col ">jour de prestation</th>
+                <th scope="col ">date de début</th>
+                <th scope="col ">date de fin </th>
+                <th scope="col ">nombre de place</th>
+                <th scope="col ">Couleur d'evenement</th>
+                <th scope="col ">Éditer</th>
+                <th scope="col ">Supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for session in sessions %}
+            <tr>
+                <td>{{ session.id }}</td>
+                <td>{{ session.benefit }}</td>
+                <td>{{ session.startTime | date('d/m/Y')  }}</td>          
+                <td>{{ session.startTime | date('H:i') }}</td>
+                <td>{{ session.endTime | date('H:i')  }}</td>
+                <td>{{ session.nbPlaceMax }}</td>
+                <td>{{ session.benefit.backgroundColor }}</td>
+                <td><a href="{{ path('edit_session', {'id': session.id}) }}">Éditer session</a></td>
+                <td><a href="{{ path('delete_session', {'id': session.id}) }}">Supprimer</a></td>
+                            <!-- Button trigger modal -->
+
+                <button type="button" style="display:none;" class="modal-trigger btn btn-primary" id="{{session.id}}" value="{{session.id}}" data-bs-toggle="modal" data-bs-target="#exampleModal{{session.id}}">
+                    Launch demo modal
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal{{session.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel{{session.id}}"><strong>Éditer Session {{ session.benefit }}</strong></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                               <button type="button" class="btn-res btn voirPLus"><a href="{{ path('edit_session', {'id': session.id}) }}">Éditer session</a></button> 
+                               <button type="button" class="btn-res btn voirPLus"><a href="{{ path('delete_session', {'id': session.id}) }}">Supprimer</a></button> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </tr>    
+            {% else %}
+            <tr>
+                <td colspan="10">pas de résultat trouver </td>
+            </tr>
+  
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="container mt-5">
+    <div id='calendar'></div>
+</div>
+
+
+
+
+
+    <script>
+         // on ajoute un evenement d'écoute sur le document charger sur cet page avec une fonction
+         document.addEventListener('DOMContentLoaded', function() {
+            // on selectionne l'élément qui a pour ID 'calendar'
+            let calendarEl = document.getElementById('calendar');
+            // calendar = nouveau calendrier et calandarEl seras composer de :
+            let calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',    // ou possible de mettre 'listWeek' ou 'dayGridMonth'
+                locale: 'fr',   // pour avoir le texte en français
+                timeZone: 'Europe/Paris', // time zone de l'europe
+                headerToolbar:  {       // modifier la disposition de la toullbar et ajouter des éléments
+                    start: 'prev,next today', // preve nexte au début 
+                    center: 'title',        //title au milieu
+                    end: 'dayGridMonth timeGridWeek list'  // a la fin on a choix afficher le mois ou la semaine
+                },
+                hiddenDays: [ 0, 6 ], // pour masquer dimanche et samedi sur le rendue du calendrier
+                buttonText: {  // permet de redefinir le texte des bouttons 
+                    today: "Aujourd'hui",  
+                    month: "Mois",
+                    week: "Semaine",
+                    list: "Liste"
+                },
+                allDaySlot: false, // defini si allday s'affiche ou non 
+                slotMinTime: "08:00", // affichage des heure qu'a partir de de 8heures,
+                slotMaxTime: "21:00", // affichage des heure jusqu'a 20heures,
+                editable: true,  // on permet l'édition.
+                eventResizableFromStart: true,  // on permet d'étirer l'événement vers le haut pour ajouter du temps.
+                nowIndicator: true, // place un trait rouge a l'heure où l'on se trouve
+                events: {{ datas | raw }},
+                eventClick : function(info) 
+                { 
+                    console.log(info);
+                    const modals = document.querySelectorAll(".modal-trigger"); // je selectionne tout les elemement avec la classe .modal-trigger
+                    console.log(modals);
+                    for(let modal of modals)
+                    {  // pour chaque élements récupérer    
+                        let id = modal.id; // on récupere la value de chaque éléments qui est l'id de la réservation
+                        if(id == info.event.id)
+                        { // si l'id de la réservation est strictement égal  a l'id de l'event qui est le meme que celui de la réservation alors 
+                                
+                                modal.click();  // on ajoute un évenement au clique.
+                        }                             
+                    }
+                }
+            });  
+            calendar.on('eventChange' , (e) => { 
+            // permet de changer l'événement de date de le déplacer dans le calendrier
+            let url = `/admin/calendar/${e.event.id}/edit` ;
+            let donnees = {
+                "start": e.event.start,
+                "end": e.event.end,  
+                "title": e.event.title,
+                "backgroundColor": e.event.backgroundColor,
+                "nbPlaceMax": e.event.extendedProps.nbPlaceMax,
+                // extended non pris en charge par les valeurs par default de fullcalendar, on doit l'utiliser pour récupérer les infos 
+            }
+            //on crée une XMLHttpRequest
+            let xhr = new XMLHttpRequest;
+            xhr.open("PUT",url);
+            xhr.send(JSON.stringify(donnees));
+            // il faut maintenant traiter les données.
+        })
+            calendar.render();
+        });
+    </script>
+    
+{% endblock %}
