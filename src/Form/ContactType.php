@@ -27,7 +27,6 @@ class ContactType extends AbstractType
                 "attr" => ['class' => "form-control"],
             ])
             ->add('messageContent', CKEditorType::class, [
-                'config' => array('toolbar' => 'full'),
                 "attr" => ['class' => "form-control"]
                 ])
             ->add('submit',SubmitType::class, [

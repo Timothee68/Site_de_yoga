@@ -92,22 +92,28 @@ class SessionController extends AbstractController
     public function showEvent(ManagerRegistry $doctrine ):Response
     {
         $events = $doctrine->getRepository(Session::class)->findAll();
-        // on boucle sur les évenements qui récupère toutes les sessions 
-        foreach($events as $event){
-            // $rdv seras un tableau associatifs pour le transformer en donnée json par la suite 
-            $rdvs[] = [
-                // on récupère toutes les infos d'un sessions  une par une 
-                'id' =>  $event->getId(),
-                'title' => $event->getBenefit()->getTitle(),
-                'start' => $event->getStartTime()->format('Y-m-d H:i:s'),
-                'end' => $event->getEndTime()->format('Y-m-d H:i:s'),
-                'nbPlaceMax' => $event->getNbPlaceMax(),
-                'backgroundColor' => $event->getBenefit()->getBackgroundColor(),    
-                                       
-            ];
+        if($events != null ){
+            // on boucle sur les évenements qui récupère toutes les sessions 
+            foreach($events as $event){
+                // $rdv seras un tableau associatifs pour le transformer en donnée json par la suite 
+                $rdvs[] = [
+                    // on récupère toutes les infos d'un sessions  une par une 
+                    'id' =>  $event->getId(),
+                    'title' => $event->getBenefit()->getTitle(),
+                    'start' => $event->getStartTime()->format('Y-m-d H:i:s'),
+                    'end' => $event->getEndTime()->format('Y-m-d H:i:s'),
+                    'nbPlaceMax' => $event->getNbPlaceMax(),
+                    'backgroundColor' => $event->getBenefit()->getBackgroundColor(),    
+                                           
+                ];
+            }
+    
+            // on encode $data en format Json 
+            $datas=json_encode($rdvs);
+        }else{
+            $datas= null;
         }
-        // on encode $data en format Json 
-        $datas=json_encode($rdvs);
+
         $sessions = $doctrine->getRepository(Session::class)->findBy([], ['startTime' => 'DESC']);
         return $this->render('session/event.html.twig' , [ 
             'sessions' => $sessions,

@@ -19,7 +19,6 @@ class PostType extends AbstractType
         $builder
     
             ->add('contents', CKEditorType::class, [
-                'config' => array('toolbar' => 'full'),
                 "attr" => ['class' => "form-control"]
                 ])
             ->add('submit',SubmitType::class, [

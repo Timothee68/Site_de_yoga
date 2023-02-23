@@ -29,7 +29,6 @@ class ProductSheetType extends AbstractType
                 "attr" => ['class' => "form-control"],
             ])
             ->add('shortDescription', CKEditorType::class, [
-                'config' => array('toolbar' => 'full'),
                 "attr" => ['class' => "form-control"]
                 ])
             ->add('image', FileType::class ,[

@@ -8,30 +8,28 @@
 	<div class="container mt-5">
 		<div class="row mt-5">
 			<div class="col">
-				<div class="card mb-3 p-lg-5">
-					<h1 class="text-center mt-3 mb-3"><strong>{{blog.title}}</strong></h1>
-					{% if blog.image %}
-						<img src="/{{blog.image}}" class="blog-image-index-detail card-img-top" alt="Image correspondant à l'article de blog {{blog.title}}">
-					{% elseif blog.urlVideo %}
-						<video width="320" height="240" controls>
-							<source src="#" type="video/mp4">
-							<source src="#" type="video/ogg">
-							Votre navigateur ne prend pas en charge la balise vidéo.
-						</video>
-					{% else %}
-						<img src="{{asset('img/logo/logo.jpg')}}" class="blog-image-index-detail card-img-top" alt="Image du logo par défaut">
-					{% endif %}
-					<div class="card-body">
-						<h5 class="card-title fs-2"></h5>
-						<p class="card-text fs-5">{{ blog.contents}}</p>
-						<p class="card-text fs-5">
-							<small class="text-muted">Éditer le : {{blog.publicationDate | date('d/m/Y H:m')}}</small></p>					
-					</div>
-				</div>
-				<button type="button" class="btn  btn-res btn-primary ">
-					<a href="{{ path('show_blog') }}">Retour Page Blog</a>
-				</button>
+				<h1 class="text-center mt-3 mb-3"><strong>{{blog.title}}</strong></h1>
+				{% if blog.image %}
+					<img src="/{{blog.image}}" class="blog-image-index-detail card-img-top" alt="Image correspondant à l'article de blog {{blog.title}}">
+				{% elseif blog.urlVideo %}
+					<video width="320" height="240" controls>
+						<source src="#" type="video/mp4">
+						<source src="#" type="video/ogg">
+						Votre navigateur ne prend pas en charge la balise vidéo.
+					</video>
+				{% else %}
+					<img src="{{asset('img/logo/logo.jpg')}}" class="blog-image-index-detail card-img-top" alt="Image du logo par défaut">
+				{% endif %}
+
+				<h5 class="card-title fs-2"></h5>
+				<p class="card-text fs-5">{{ blog.contents}}</p>
+				<p class="card-text fs-5">
+				<small class="text-muted">Éditer le : {{blog.publicationDate | date('d/m/Y H:m')}}</small></p>					
+
 			</div>
 		</div>
+		<button type="button" class="btn btn-res btn-primary ">
+			<a href="{{ path('show_blog') }}">Retour Page Blog</a>
+		</button>
 	</div>
 {% endblock %}

@@ -72,7 +72,47 @@ class NewsletterController extends AbstractController
             'formNewsletter' => $form->createView(),
         ]);
     }
+    // public function index(ManagerRegistry $doctrine ,Newsletter $newsletter = null, Request $request, MailerInterface $mailerInterface): Response
+    // {
+    //     // crée le formulaire de type newsletter 
+    //     // $newsletter = new Newsletter();
+    //     // $form = $this->createForm(NewsletterType::class , $newsletter );
+    //     // $form->handleRequest($request);
 
+    //     // // si envoye et sanitise avec les filter etc protection faille xss puis on execute le tout 
+    //     // if($form->isSubmitted() && $form->isValid())
+    //     // {
+    //     //     $newsletter = $form->getData();
+    //     //     $newsletter->setIsRegister(true);    
+    //     //     // hydrate et protection faille sql
+    //     //     $entityManager = $doctrine->getManager();
+    //     //     $entityManager->persist($newsletter);
+    //     //     $entityManager->flush();
+    //     if(isset($_POST['submit']))
+    //     {
+    //         $newInscription = $request->request->get("email");
+    //         $newsletter = new Newsletter();
+    //         $newsletter->setEmail($newInscription);
+    //         $entityManager = $doctrine->getManager();
+    //         $entityManager->persist($newsletter);
+    //         $entityManager->flush();
+    //         // generate a signed url and email it to the user
+    //         $email = (new TemplatedEmail())
+    //                 ->from(new Address('Om-nada-braham@exemple.com', 'admin-yoga'))
+    //                 ->to($newsletter->getEmail())
+    //                 ->subject('S\'il vous plais comfirmer votre Email')
+    //                 ->htmlTemplate('newsletter/confirmation_email.html.twig')
+    //         ;
+    //         $this->addFlash('success', 'Ton Compte a bien été enreigstrer, vérifie ton email pour confirmer la souscription a la newsletter!');
+    //         $mailerInterface->send($email);
+            
+    //         return $this->render('newsletter/index.html.twig');
+    //     }
+
+    //     // return $this->render('newsletter/registrationNewsletter.html.twig', [
+    //     //     'formNewsletter' => $form->createView(),
+    //     // ]);
+    // }
     public function sendMailToClient(){
 
     }

@@ -5,12 +5,17 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container mt-5">
-        <div class ="row">
-            <div class="col">
-                <h1 class="mt-2 mb-5">Les vidéos</h1> 
+	<section>
+		<div class="header-content">
+			<figure>
+				<img id="header_img" src="{{asset('img/img-header.jpg')}}" alt="Yoga posture dans la montagne">
+			</figure>
+            <div class="header_info-blog">
+				<h1 class="titre-blog">Vidéo d'<em>OM-NADA-BRAHMA</em></h1>
             </div>
-        </div>
+		</div>
+	</section>
+    <div class="container mt-5">
         <div class ="row">
             <div class="row row-cols-3 row-cols-md-4 g-4">
                 {% for video in videos %}

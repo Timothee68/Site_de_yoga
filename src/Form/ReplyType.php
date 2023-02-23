@@ -16,7 +16,6 @@ class ReplyType extends AbstractType
     {
         $builder
             ->add('content', CKEditorType::class, [
-                'config' => array('toolbar' => 'full'),
                 "attr" => ['class' => "form-control"]
                 ])
             ->add('submit',SubmitType::class, [

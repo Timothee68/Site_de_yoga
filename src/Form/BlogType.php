@@ -19,7 +19,6 @@ class BlogType extends AbstractType
     {
         $builder
             ->add('contents', CKEditorType::class, [
-                'config' => array('toolbar' => 'full'),
                 "attr" => ['class' => "form-control"]
                 ])
             ->add('image', FileType::class ,[
